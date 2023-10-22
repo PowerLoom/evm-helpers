@@ -1,3 +1,4 @@
+
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.19;
@@ -19,22 +20,15 @@ contract UniV3Helper {
      * The tick range is constrained by the global min and max tick values.
      * If there are no initialized ticks in the range, the function returns an empty array.
      * @param pool The Uniswap V3 pool from which to fetch tick data.
-     * @param tickRange The range (either side of the current tick) within which to fetch tick data.
      * @return ticks An array of bytes each containing packed data about each tick in the specified range.
      */
-    function getTicks(IUniswapV3 pool, int24 tickRange) external view returns (bytes[] memory ticks) {
+    function getTicks(IUniswapV3 pool) external view returns (bytes[] memory ticks) {
         int24 tickSpacing = pool.tickSpacing();
         (,int24 tick) = pool.slot0();
-
-        tickRange *= tickSpacing;
-        int24 fromTick = tick - tickRange;
-        int24 toTick = tick + tickRange;
-        if (fromTick < _MIN_TICK) {
-            fromTick = _MIN_TICK;
-        }
-        if (toTick > _MAX_TICK) {
-            toTick = _MAX_TICK;
-        }
+        
+        int24 fromTick = _MIN_TICK;
+        int24 toTick = _MAX_TICK;
+        
 
         int24[] memory initTicks = new int24[](uint256(int256((toTick - fromTick + 1) / tickSpacing)));
 
