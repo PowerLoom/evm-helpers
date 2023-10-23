@@ -51,10 +51,10 @@ contract UniV3Helper {
         ticks = new bytes[](counter);
         for (uint256 i = 0; i < counter; i++) {
             (
-                uint128 liquidityGross,
+                , // uint128 liquidityGross,
                 int128 liquidityNet,
-                uint256 feeGrowthOutside0X128,
-                uint256 feeGrowthOutside1X128
+                 // uint256 feeGrowthOutside0X128,
+                ,// uint256 feeGrowthOutside1X128
                 , // int56 tickCumulativeOutside,
                 , // secondsPerLiquidityOutsideX128
                 , // uint32 secondsOutside
@@ -62,10 +62,10 @@ contract UniV3Helper {
             ) = pool.ticks(initTicks[i]);
 
             ticks[i] = abi.encodePacked(
-                liquidityGross,
+                // liquidityGross,
                 liquidityNet,
-                feeGrowthOutside0X128,
-                feeGrowthOutside1X128,
+                // feeGrowthOutside0X128,
+                // feeGrowthOutside1X128,
                 // tickCumulativeOutside,
                 // secondsPerLiquidityOutsideX128,
                 // secondsOutside,
