@@ -22,12 +22,12 @@ contract UniV3Helper {
      * @param pool The Uniswap V3 pool from which to fetch tick data.
      * @return ticks An array of bytes each containing packed data about each tick in the specified range.
      */
-    function getTicks(IUniswapV3 pool) external view returns (bytes[] memory ticks) {
+    function getTicks(IUniswapV3 pool, int24 fromTick, int24 toTick) external view returns (bytes[] memory ticks) {
         int24 tickSpacing = pool.tickSpacing();
-        (,int24 tick) = pool.slot0();
         
-        int24 fromTick = _MIN_TICK;
-        int24 toTick = _MAX_TICK;
+        require(fromTick <= toTick, "fromtick > totick");
+        require(fromTick >= _MIN_TICK && toTick <= _MAX_TICK, "tick out of range");
+        
         
 
         int24[] memory initTicks = new int24[](uint256(int256((toTick - fromTick + 1) / tickSpacing)));
